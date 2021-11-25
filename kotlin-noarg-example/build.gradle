@@ -1,0 +1,11 @@
+plugins {
+    id "org.jetbrains.kotlin.plugin.noarg" version "${kotlin_version}"
+}
+
+dependencies {
+//    compileOnly("io.github.gcdd1993:kotlin-noarg:0.0.1")
+}
+
+noArg {
+    annotation("io.github.gcdd1993.noarg.annotation.NoArg")
+}

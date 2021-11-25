@@ -1,0 +1,43 @@
+import java.text.SimpleDateFormat
+
+plugins {
+    id "org.jetbrains.kotlin.jvm" version "${kotlin_version}"
+}
+
+apply plugin: "java-library"
+apply plugin: "maven-publish"
+apply from: "${rootDir}/gradle/maven-publish.gradle"
+
+sourceCompatibility = JavaVersion.VERSION_11
+targetCompatibility = JavaVersion.VERSION_11
+
+compileKotlin {
+    kotlinOptions {
+        freeCompilerArgs = ["-Xjsr305=warn"]
+        jvmTarget = "11"
+    }
+}
+
+java {
+    withJavadocJar()
+    withSourcesJar()
+}
+
+jar {
+    enabled = true
+    manifest {
+        attributes(
+                "Implementation-Title": project.name,
+                "Implementation-Version": project.version,
+                "Built-By": System.properties["user.name"],
+                "Build-Timestamp": new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSZ").format(new Date()),
+                "Created-By": "Gradle ${gradle.gradleVersion}",
+                "Build-Jdk": "${System.properties["java.version"]} (${System.properties["java.vendor"]} ${System.properties["java.vm.version"]})",
+                "Build-OS": "${System.properties["os.name"]} ${System.properties["os.arch"]} ${System.properties["os.version"]}"
+        )
+    }
+}
+
+test {
+    useJUnitPlatform()
+}

@@ -1,0 +1,4 @@
+subprojects { subproject ->
+    group "io.github.gcdd1993"
+    version root_version
+}

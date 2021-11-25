@@ -1,0 +1,35 @@
+def snapshotArtifactory = 'https://oss.sonatype.org/content/repositories/snapshots'
+def releaseArtifactory = 'http://oss.sonatype.org/service/local/staging/deploy/maven2'
+def mavenName = 'gcdd1993'
+afterEvaluate { project ->
+    if (project.plugins.hasPlugin("maven-publish")) {
+        publishing {
+            repositories {
+                maven {
+                    name "${mavenName}"
+                    url = version.endsWith('SNAPSHOT') ? snapshotArtifactory : releaseArtifactory
+                    credentials {
+                        username "${ossrh_username}"
+                        password "${ossrh_password}"
+                    }
+                    authentication {
+                        basic(BasicAuthentication)
+                    }
+                }
+            }
+            publications {
+                kotlinNoarg(MavenPublication) {
+                    from components.java
+                    versionMapping {
+                        usage('java-api') {
+                            fromResolutionOf('runtimeClasspath')
+                        }
+                        usage('java-runtime') {
+                            fromResolutionResult()
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
