@@ -1,5 +1,5 @@
-def snapshotArtifactory = 'https://oss.sonatype.org/content/repositories/snapshots'
-def releaseArtifactory = 'http://oss.sonatype.org/service/local/staging/deploy/maven2'
+def snapshotArtifactory = 'https://s01.oss.sonatype.org/content/repositories/snapshots'
+def releaseArtifactory = 'https://s01.oss.sonatype.org/content/repositories/releases'
 def mavenName = 'gcdd1993'
 afterEvaluate { project ->
     if (project.plugins.hasPlugin("maven-publish")) {
